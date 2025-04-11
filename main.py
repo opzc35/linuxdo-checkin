@@ -66,8 +66,8 @@ class LinuxDoBrowser:
     def click_topic(self):
         topic_list = self.page.query_selector_all("#list-area .title")
         logger.info(f"发现 {len(topic_list)} 个主题帖")
-        for topic in topic_list:
-            self.click_one_topic(topic.get_attribute("href"))
+        topic = topic_list[0]
+        self.click_one_topic(topic.get_attribute("href"))
 
     @retry_decorator()
     def click_one_topic(self, topic_url):
@@ -79,7 +79,7 @@ class LinuxDoBrowser:
     def browse_post(self, page):
         prev_url = None
         # 开始自动滚动，最多滚动10次
-        for _ in range(10):
+        for _ in range(5):
             # 随机滚动一段距离
             scroll_distance = random.randint(550, 650)  # 随机滚动 550-650 像素
             logger.info(f"向下滚动 {scroll_distance} 像素...")
